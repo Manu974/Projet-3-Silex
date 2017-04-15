@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="blog.css" rel="stylesheet" />
+    <title>Blog - Home</title>
+</head>
+<body>
+    <header>
+        <h1>Blog</h1>
+    </header>
+    {% for billet in billets %}
+    <article>
+        <h2>{{ billet.title }}</h2>
+        <p>{{ billet.content }}</p>
+    </article>
+    {% endfor %}
+    <footer class="footer">
+        <p>Blog is a minimalistic CMS built as a showcase for modern PHP development.</p>
+    </footer>
+</body>
+</html>
