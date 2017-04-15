@@ -7,3 +7,7 @@ body {
     padding-top: 10px;
     text-align: center;
 }
+
+.billetTitle:hover, .billetTitle:focus {
+    text-decoration: none;
+}

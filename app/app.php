@@ -22,3 +22,9 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
 $app['dao.billet'] = function ($app) {
     return new Blog\DAO\BilletDAO($app['db']);
 };
+
+$app['dao.comment'] = function ($app) {
+    $commentDAO = new Blog\DAO\CommentDAO($app['db']);
+    $commentDAO->setBilletDAO($app['dao.billet']);
+    return $commentDAO;
+};
