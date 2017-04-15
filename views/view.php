@@ -10,11 +10,11 @@
         <h1>MicroCMS</h1>
     </header>
     <?php foreach ($billets as $billet): ?>
-    <article>
-        <h2><?php echo $billet['billet_title'] ?></h2>
-        <p><?php echo $billet['billet_content'] ?></p>
-    </article>
-    <?php endforeach; ?>
+<article>
+    <h2><?php echo $billet->getTitle() ?></h2>
+    <p><?php echo $billet->getContent() ?></p>
+</article>
+<?php endforeach ?>
     <footer class="footer">
         <a href="https://github.com/bpesquet/OC-MicroCMS">MicroCMS</a> is a minimalistic CMS built as a showcase for modern PHP development.
     </footer>

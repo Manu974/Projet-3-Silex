@@ -1,9 +1,8 @@
 <?php
 
 // Home page
-$app->get('/', function () {
-    require '../src/model.php';
-    $billets = getBillets();
+$app->get('/', function () use ($app) {
+    $billets = $app['dao.billet']->findAll();
 
     ob_start();             // start buffering HTML output
     require '../views/view.php';
