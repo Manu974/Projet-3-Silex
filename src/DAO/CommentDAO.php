@@ -16,6 +16,24 @@ class CommentDAO extends DAO
     }
 
     /**
+     * Returns a comment matching the supplied id.
+     *
+     * @param integer $id The comment id
+     *
+     * @return \Blog\Domain\Comment|throws an exception if no matching comment is found
+     */
+    public function find($id) {
+        $sql = "select * from t_comment where com_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No comment matching id " . $id);
+    }
+
+
+    /**
      * Return a list of all comments for an billet, sorted by date (most recent last).
      *
      * @param integer $billetId The billet id.
@@ -94,6 +112,16 @@ class CommentDAO extends DAO
      */
     public function deleteAllByBillet($billetId) {
         $this->getDb()->delete('t_comment', array('billet_id' => $billetId));
+    }
+
+    /**
+     * Removes a comment from the database.
+     *
+     * @param @param integer $id The comment id
+     */
+    public function delete($id) {
+        // Delete the comment
+        $this->getDb()->delete('t_comment', array('com_id' => $id));
     }
 
 
