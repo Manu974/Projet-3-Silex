@@ -43,6 +43,24 @@ class CommentDAO extends DAO
         return $comments;
     }
 
+    /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAll() {
+        $sql = "select * from t_comment order by com_id desc";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $entities = array();
+        foreach ($result as $row) {
+            $id = $row['com_id'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+        return $entities;
+    }
+
 
     /**
      * Saves a comment into the database.
@@ -67,6 +85,15 @@ class CommentDAO extends DAO
             $id = $this->getDb()->lastInsertId();
             $comment->setId($id);
         }
+    }
+
+    /**
+     * Removes all comments for an article
+     *
+     * @param $billetId The id of the article
+     */
+    public function deleteAllByBillet($billetId) {
+        $this->getDb()->delete('t_comment', array('billet_id' => $billetId));
     }
 
 

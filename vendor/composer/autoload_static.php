@@ -21,6 +21,7 @@ class ComposerStaticInit3b22c75fe8138b708012b2bb4f357c16
             'Symfony\\Polyfill\\Php70\\' => 23,
             'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Validator\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Security\\' => 27,
             'Symfony\\Component\\Routing\\' => 26,
@@ -71,6 +72,10 @@ class ComposerStaticInit3b22c75fe8138b708012b2bb4f357c16
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Validator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/validator',
         ),
         'Symfony\\Component\\Translation\\' => 
         array (
@@ -165,6 +170,10 @@ class ComposerStaticInit3b22c75fe8138b708012b2bb4f357c16
     public static $prefixesPsr0 = array (
         'T' => 
         array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/extensions/lib',
+            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',

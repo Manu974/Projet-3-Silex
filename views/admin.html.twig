@@ -1,0 +1,81 @@
+{% extends "layout.html.twig" %}
+{% set adminMenu = true %}
+
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+<h2 class="text-center">{{ block('title') }}</h2>
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a href="#billets" data-toggle="tab">Billets</a></li>
+            <li><a href="#comments" data-toggle="tab">Comments</a></li>
+            <li><a href="#users" data-toggle="tab">Users</a></li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade in active adminTable" id="billets">
+        {% if billets %}
+        <div class="table-responsive">
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Publication</th>
+                        <th>Author</th>   <!-- Actions column -->
+                    </tr>
+                </thead>
+                {% for billet in billets %}
+                <tr>
+                    <td><a class="billetTitle" href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></td>
+                    <td>{{ billet.content}}</td>
+                    <td>{{ billet.publication}}</td>
+                    <td>{{ billet.author.username}}</td>
+                    <td>
+                        <a href="{{ path('admin_billet_edit', { 'id': billet.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                        <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#billetDialog{{ billet.id }}"><span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <div class="modal fade" id="billetDialog{{ billet.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to delete this billet ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}" class="btn btn-danger">Confirm</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">No articles found.</div>
+        {% endif %}
+        <a href="{{ path('admin_billet_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add billet</button></a>
+    </div>
+    <div class="tab-pane fade adminTable" id="comments">
+        <!-- TODO Insérer ici le code de gestion des commentaires -->
+        
+    </div>
+    <div class="tab-pane fade adminTable" id="users">
+        <!-- TODO Insérer ici le code de gestion des utilisateurs -->
+        
+    </div>
+</div>
+{% endblock %}
