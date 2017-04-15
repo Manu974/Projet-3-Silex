@@ -49,6 +49,11 @@ $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\LocaleServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__.'/../var/logs/blog.log',
+    'monolog.name' => 'Blog',
+    'monolog.level' => $app['monolog.level']
+));
 
 // Register services.
 // Register services

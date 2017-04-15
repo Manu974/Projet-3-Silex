@@ -1,0 +1,1 @@
+[2017-04-15 19:59:26] Blog.INFO: Matched route "{route}". {"route":"home","route_parameters":{"_controller":"[object] (Closure: {})","_route":"home"},"request_uri":"http://blog/","method":"GET"} []

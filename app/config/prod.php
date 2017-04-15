@@ -10,3 +10,6 @@ $app['db.options'] = array(
     'user'     => 'blog_user',
     'password' => 'Ovnir@$',
 );
+
+// define log level
+$app['monolog.level'] = 'WARNING';
