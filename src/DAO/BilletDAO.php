@@ -8,6 +8,15 @@ class BilletDAO extends DAO
 {
 
     /**
+     * @var \Blog\DAO\UserDAO
+     */
+    private $userDAO;
+
+    public function setUserDAO(UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
+    }
+
+    /**
      * Return a list of all billets, sorted by date (most recent first).
      *
      * @return array A list of all billets.
@@ -56,6 +65,13 @@ class BilletDAO extends DAO
         $billet->setTitle($row['billet_title']);
         $billet->setContent($row['billet_content']);
         $billet->setPublication($row['billet_publication']);
+
+         if (array_key_exists('author', $row)) {
+            // Find and set the associated author
+            $userId = $row['author'];
+            $user = $this->userDAO->find($userId);
+            $billet->setAuthor($user);
+        }
         return $billet;
     }
 }

@@ -7,6 +7,7 @@
 <articl e>
     <h2><a class="billetTitle" href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></h2>
     <p>{{ billet.content }}</p>
+    <p> publié par {{ billet.author.username }}</p>
 </article>
 {% endfor %}
 {% endblock %}

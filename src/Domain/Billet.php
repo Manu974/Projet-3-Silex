@@ -18,10 +18,10 @@ class Billet
      */
     private $title;
 
-    /**
-     * Billet author.
+     /**
+     * Associated user.
      *
-     * @var string
+     * @var \Blog\Domain\User
      */
     private $author;
 
@@ -58,11 +58,21 @@ class Billet
         return $this;
     }
 
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\User
+     */
     public function getAuthor() {
         return $this->author;
     }
 
-    public function setAuthor($author) {
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\User
+     */
+    public function setAuthor(User $author) {
         $this->author = $author;
         return $this;
     }
