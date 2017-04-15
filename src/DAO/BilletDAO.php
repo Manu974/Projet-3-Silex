@@ -51,6 +51,36 @@ class BilletDAO extends DAO
             throw new \Exception("No billet matching id " . $id);
     }
 
+    /**
+     * Return a list of all billets for an user, sorted by date (most recent last).
+     *
+     * @param integer $userId The user id.
+     *
+     * @return array A list of all billets for the user.
+     */
+    public function findAllByUser($userId) {
+        // The associated user is retrieved only once
+        $user = $this->userDAO->find($userId);
+
+
+        // art_id is not selected by the SQL query
+        // The user won't be retrieved during domain objet construction
+        $sql = "select billet_id, billet_title, billet_content, billet_publication,author from t_billet where author=? order by billet_id";
+          $result = $this->getDb()->fetchAll($sql, array($userId));
+
+      
+        // Convert query result to an array of domain objects
+        $billets = array();
+        foreach ($result as $row) {
+            $billetId = $row['billet_id'];
+            $billet = $this->buildDomainObject($row);
+            // The associated user is defined for the constructed billet
+            $billet->setAuthor($user);
+            $billets[$billetId] = $billet;
+        }
+        return $billets;
+    }
+
 
      /**
      * Saves an billet into the database.
@@ -85,6 +115,16 @@ class BilletDAO extends DAO
     public function delete($id) {
         // Delete the billet
         $this->getDb()->delete('t_billet', array('billet_id' => $id));
+    }
+
+    /**
+     * Removes all comments for a user
+     *
+     * @param integer $userId The id of the user
+     */
+    public function deleteAllByUser($userId) {
+
+        $this->getDb()->delete('t_billet', array('author' => $userId));
     }
 
     
