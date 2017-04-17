@@ -14,7 +14,7 @@ class BilletType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('content', TextareaType::class);
+            ->add('content', TextareaType::class,array('required'    => false));
             $builder->add('publication', DatetimeType::class, array(
         'data' => new \DateTime('now')));
     }

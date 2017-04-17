@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec4a195f6c4bbdc24f4bb698e0d07e76",
+    "content-hash": "d4b148a2121b33df189a7552c2a4d22c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2230,6 +2230,52 @@
             "description": "Symfony Validator Component",
             "homepage": "https://symfony.com",
             "time": "2016-07-26T08:03:56+00:00"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "4.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "87a20625963d051cce993130c6d8ebd5fbc96314"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/87a20625963d051cce993130c6d8ebd5fbc96314",
+                "reference": "87a20625963d051cce993130c6d8ebd5fbc96314",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2017-03-30T13:48:40+00:00"
         },
         {
             "name": "twig/extensions",

@@ -1,13 +1,16 @@
 <!doctype html>
 <html>
 <head>
+{% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('/lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/blog.css') }}" rel="stylesheet">
+    
     <title>Blog - {% block title %}{% endblock %}</title>
 </head>
+{% endblock %}
 <body>
     <div class="container">
         <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
@@ -51,10 +54,12 @@
             <p>Blog is a minimalistic CMS built as a showcase for modern PHP development.</p>
         </footer>
     </div>
-    
+    {% block script %}
+
     <!-- jQuery -->
     <script src="{{ asset('/lib/jquery/jquery.min.js') }}"></script>
     <!-- JavaScript Boostrap plugin -->
     <script src="{{ asset('/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
 </body>
 </html>
