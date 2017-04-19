@@ -46,7 +46,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The billet won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, parent from t_comment where billet_id=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, parent, status from t_comment where billet_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($billetId));
 
         // Convert query result to an array of domain objects
@@ -90,9 +90,37 @@ class CommentDAO extends DAO
             'billet_id' => $comment->getBillet()->getId(),
             'com_pseudo' => $comment->getPseudo(),
             'com_content' => $comment->getContent(),
-            'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s')
+            'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s'),
+            'status'=> $comment->getStatus(),
+            'parent'=> $comment->getParent()
+            
             );
+        if ($comment->getId()) {
+            // The comment has already been saved : update it
+            $this->getDb()->update('t_comment', $commentData, array('com_id' => $comment->getId()));
+        } else {
+            // The comment has never been saved : insert it
+            $this->getDb()->insert('t_comment', $commentData);
+            // Get the id of the newly created comment and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $comment->setId($id);
+        }
+    }
 
+    /**
+     * Saves a comment into the database.
+     *
+     * @param \Blog\Domain\Comment $comment The comment to save
+     */
+    public function update(Comment $comment) {
+        $commentData = array(
+            'billet_id' => $comment->getBillet()->getId(),
+            'com_pseudo' => $comment->getPseudo(),
+            'com_content' => $comment->getContent(),
+            'com_dateofpost' => $comment->getDateofpost(),
+            'status'=> $comment->getStatus(),
+            'parent'=> $comment->getParent()
+            );
         if ($comment->getId()) {
             // The comment has already been saved : update it
             $this->getDb()->update('t_comment', $commentData, array('com_id' => $comment->getId()));
@@ -138,7 +166,8 @@ class CommentDAO extends DAO
         $comment->setDateofpost($row['com_dateofpost']);
         $comment->setContent($row['com_content']);
         $comment->setParent($row['parent']);
-
+        $comment->setStatus($row['status']);
+        
         if (array_key_exists('billet_id', $row)) {
             // Find and set the associated billet
             $billetId = $row['billet_id'];

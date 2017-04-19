@@ -36,6 +36,10 @@ $app->match('/admin/comment/{id}/edit', "Blog\Controller\AdminController::editCo
 $app->get('/admin/comment/{id}/delete', "Blog\Controller\AdminController::deleteCommentAction")
 ->bind('admin_comment_delete');
 
+// Remove a comment
+$app->get('/admin/comment/{id}/publish', "Blog\Controller\AdminController::publishCommentAction")
+->bind('admin_comment_publish');
+
 // Add a user
 $app->match('/admin/user/add', "Blog\Controller\AdminController::addUserAction")
 ->bind('admin_user_add');

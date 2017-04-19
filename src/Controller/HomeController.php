@@ -28,7 +28,7 @@ class HomeController {
      */
     public function billetAction($id, Request $request, Application $app) {
         $billet = $app['dao.billet']->find($id);
-    $commentFormView = null;
+        $commentFormView = null;
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
         // A user is fully authenticated : he can add comments
         $comment = new Comment();

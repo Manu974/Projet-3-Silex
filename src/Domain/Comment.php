@@ -47,6 +47,13 @@ class Comment
      */
     private $parent;
 
+    /**
+     * Comment status.
+     *
+     * @var boolean
+     */
+    private $status;
+
     public function getId() {
         return $this->id;
     }
@@ -98,6 +105,15 @@ class Comment
 
     public function setParent($parent) {
         $this->parent = $parent;
+        return $this;
+    }
+
+     public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
         return $this;
     }
 }
