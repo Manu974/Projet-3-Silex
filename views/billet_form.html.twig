@@ -59,11 +59,10 @@
             }}) }}
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-4 col-sm-3">
-            <input type="submit" class="btn btn-primary" value="Save" />
-        </div>
-    </div>
+
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(billetForm.valider, {'attr': {'class': 'btn btn-primary'}}) }}
+    
 {{ form_end(billetForm) }}
 </div>
 {% endblock %}

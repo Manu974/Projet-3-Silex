@@ -4,7 +4,7 @@
 
 {% block content %}
 {% for billet in billets %}
-<div class="panel panel-default">
+<div class="panel panel-primary">
   <div class="panel-heading"><h2>{{ billet.title }}</h2></div>
   <div class="panel-body"> <p>{{ billet.content|raw }}</p>
     <p> publié par {{ billet.author.username }}</p>

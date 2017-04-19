@@ -38,9 +38,12 @@ class HomeController {
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
+
+            $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été soumis. il est en cours de modération');
+             return $app->redirect($app['url_generator']->generate('billet', array('id'=> $id)));
         }
         $commentFormView = $commentForm->createView();
+
     }
     $comments = $app['dao.comment']->findAllByBillet($id);
 

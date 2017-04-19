@@ -46,6 +46,7 @@ class AdminController {
         if ($billetForm->isSubmitted() && $billetForm->isValid()) {
         $app['dao.billet']->save($billet);
         $app['session']->getFlashBag()->add('success', 'The billet was successfully created.');
+        return $app->redirect($app['url_generator']->generate('admin_billet_add'));
         }
 
         $linkFormView = $billetForm->createView();
@@ -70,6 +71,7 @@ class AdminController {
     if ($billetForm->isSubmitted() && $billetForm->isValid()) {
         $app['dao.billet']->save($billet);
         $app['session']->getFlashBag()->add('success', 'The billet was successfully updated.');
+         return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('billet_form.html.twig', array(
         'title' => 'Edit billet',
@@ -106,6 +108,7 @@ class AdminController {
     if ($commentForm->isSubmitted() && $commentForm->isValid()) {
         $app['dao.comment']->save($comment);
         $app['session']->getFlashBag()->add('success', 'The comment was successfully updated.');
+         return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('comment_form.html.twig', array(
         'title' => 'Edit comment',

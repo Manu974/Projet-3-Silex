@@ -3,7 +3,7 @@
 {% block title %}{{ billet.title }}{% endblock %}
 
 {% block content %}
-<div class="panel panel-primary">
+<div class="panel panel-info">
   <div class="panel-heading"><h2>{{ billet.title }}</h2></div>
   <div class="panel-body"><p>{{ billet.content|raw }}</p></div>
 </div>
@@ -13,7 +13,11 @@
     {% if comments %}
     {% for comment in comments %}
         {% if comment.status == '1' %}
-        <strong>{{ comment.pseudo}} at {{comment.dateofpost}}</strong> said : {{ comment.content }}<br>
+        <div class="panel panel-success">
+        <div class="panel-heading"><strong>{{ comment.pseudo}} at {{comment.dateofpost}}</strong></div>
+        <div class="panel-body">{{ comment.content }}</div>
+        </div>
+        
         {% endif %}
         {% endfor %}
     {% else %}
@@ -50,7 +54,7 @@
                 }}) }}
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publish comment" />
+                <input type="submit" class="btn btn-primary" value="Publish comment"/>
             </div>
         {{ form_end(commentForm) }}
         {% for flashMessage in app.session.flashbag.get('success') %}
@@ -59,7 +63,7 @@
             </div>
         {% endfor %}
     {% else %}
-        <a href="{{ path('login') }} ">Log in</a> to add comments.
+        <a href="{{ path('login') }}">Log in</a> to add comments.
     {% endif %}
 </p>
 {% endblock %}
