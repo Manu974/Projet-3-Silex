@@ -40,6 +40,11 @@ $app->get('/admin/comment/{id}/delete', "Blog\Controller\AdminController::delete
 $app->get('/admin/comment/{id}/publish', "Blog\Controller\AdminController::publishCommentAction")
 ->bind('admin_comment_publish');
 
+// Remove a comment
+$app->get('/admin/comment/{id}/dontpublish', "Blog\Controller\AdminController::dontpublishCommentAction")
+->bind('admin_comment_dontpublish');
+
+
 // Add a user
 $app->match('/admin/user/add', "Blog\Controller\AdminController::addUserAction")
 ->bind('admin_user_add');

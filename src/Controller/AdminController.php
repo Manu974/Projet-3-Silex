@@ -129,6 +129,23 @@ class AdminController {
     }
 
 
+    /**
+     * Edit comment controller.
+     *
+     * @param integer $id Comment id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
+    public function dontpublishCommentAction($id, Request $request, Application $app) {
+        $comment = $app['dao.comment']->find($id);
+        $comment->setStatus('0');
+        $app['dao.comment']->update($comment);
+
+        return $app->redirect($app['url_generator']->generate('admin'));
+       
+    }
+
+
 
 
     

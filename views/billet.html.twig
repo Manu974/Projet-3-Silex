@@ -10,16 +10,14 @@
 <p>
     <h3>Comments</h3>
 
-     {% if comments %}
+    {% if comments %}
     {% for comment in comments %}
         {% if comment.status == '1' %}
         <strong>{{ comment.pseudo}} at {{comment.dateofpost}}</strong> said : {{ comment.content }}<br>
-        
-    {% else %}
-        No comments yet.
-
         {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+     No comments yet.
     {% endif %}
 
     <h3>Add a comment</h3>

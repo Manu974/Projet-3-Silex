@@ -33,6 +33,7 @@ class HomeController {
         // A user is fully authenticated : he can add comments
         $comment = new Comment();
         $comment->setBillet($billet);
+        $comment->setStatus('0');
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
