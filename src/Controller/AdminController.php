@@ -126,7 +126,7 @@ class AdminController {
         $comment = $app['dao.comment']->find($id);
         $comment->setStatus('1');
         $app['dao.comment']->update($comment);
-
+        $app['session']->getFlashBag()->add('success', 'The comment was successfully published.');
         return $app->redirect($app['url_generator']->generate('admin'));
        
     }
@@ -143,7 +143,7 @@ class AdminController {
         $comment = $app['dao.comment']->find($id);
         $comment->setStatus('0');
         $app['dao.comment']->update($comment);
-
+        
         return $app->redirect($app['url_generator']->generate('admin'));
        
     }
@@ -188,6 +188,7 @@ class AdminController {
         $user->setPassword($password); 
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        return $app->redirect($app['url_generator']->generate('admin_user_add'));
     }
     return $app['twig']->render('user_form.html.twig', array(
         'title' => 'New user',
@@ -214,6 +215,7 @@ class AdminController {
         $user->setPassword($password); 
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully updated.');
+        return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('user_form.html.twig', array(
         'title' => 'Edit user',
