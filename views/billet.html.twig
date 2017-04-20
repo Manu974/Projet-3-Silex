@@ -25,7 +25,11 @@
     {% endif %}
 
     <h3>Add a comment</h3>
-
+{% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
     {% if commentForm %}
         {{ form_start(commentForm,{ 'attr': {'class': 'form-horizontal'} }) }}
             <div class="form-group">
@@ -49,11 +53,7 @@
                 <input type="submit" class="btn btn-primary" value="Publish comment"/>
             </div>
         {{ form_end(commentForm) }}
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
+        
     {% else %}
         <a href="{{ path('login') }}">Log in</a> to add comments.
     {% endif %}

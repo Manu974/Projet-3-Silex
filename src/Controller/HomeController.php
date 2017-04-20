@@ -94,8 +94,8 @@ class HomeController {
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
-        return $app->redirect($app['url_generator']->generate('home'));
+        $app['session']->getFlashBag()->add('register_success', 'The user was successfully created. you can connect you now');
+        return $app->redirect($app['url_generator']->generate('login'));
     }
     return $app['twig']->render('register.html.twig', array(
         'title' => 'New user',
