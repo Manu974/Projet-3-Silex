@@ -41,6 +41,36 @@ class CommentDAO extends DAO
             throw new \Exception("No comment matching id " . $id);
     }
 
+    /**
+     * Return a list of all billets for an user, sorted by date (most recent last).
+     *
+     * @param integer $userId The user id.
+     *
+     * @return array A list of all billets for the user.
+     */
+    public function findAllByUser($userId) {
+        // The associated user is retrieved only once
+        $user = $this->userDAO->find($userId);
+
+
+        // art_id is not selected by the SQL query
+        // The user won't be retrieved during domain objet construction
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, parent, status from t_comment where com_pseudo=? order by com_id";
+          $result = $this->getDb()->fetchAll($sql, array($userId));
+
+      
+        // Convert query result to an array of domain objects
+        $comments = array();
+        foreach ($result as $row) {
+            $commentId = $row['com_id'];
+            $comment = $this->buildDomainObject($row);
+            // The associated user is defined for the constructed comment
+            $comment->setPseudo($user);
+            $comments[$commentId] = $comment;
+        }
+        return $comments;
+    }
+
 
     /**
      * Return a list of all comments for an billet, sorted by date (most recent last).
@@ -159,6 +189,16 @@ class CommentDAO extends DAO
     public function delete($id) {
         // Delete the comment
         $this->getDb()->delete('t_comment', array('com_id' => $id));
+    }
+
+    /**
+     * Removes all comments for a user
+     *
+     * @param integer $userId The id of the user
+     */
+    public function deleteAllByUser($userId) {
+
+        $this->getDb()->delete('t_comment', array('com_pseudo' => $userId));
     }
 
 

@@ -229,12 +229,8 @@ class AdminController {
      * @param Application $app Silex application
      */
     public function deleteUserAction($id, Application $app) {
-        // Delete all associated comments
-    $billets = $app['dao.billet']->findAllByUser($id);
-   
-    foreach ($billets as $billetId => $values) {
-        $app['dao.comment']->deleteAllByBillet($billetId);
-    }
+       
+    $app['dao.comment']->deleteAllByUser($id);
     $app['dao.billet']->deleteAllByUser($id);
     // Delete the user
     $app['dao.user']->delete($id);
