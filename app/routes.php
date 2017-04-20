@@ -12,6 +12,10 @@ $app->match('/billet/{id}', "Blog\Controller\HomeController::billetAction")
 $app->get('/login', "Blog\Controller\HomeController::loginAction")
 ->bind('login');
 
+// Login form
+$app->match('/register', "Blog\Controller\HomeController::registerAction")
+->bind('register');
+
 // Admin zone
 $app->get('/admin', "Blog\Controller\AdminController::indexAction")
 ->bind('admin');

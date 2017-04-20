@@ -41,7 +41,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ path('login') }}">Log in</a></li>
+                                    <li><a href="{{ path('login') }}"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+                                    <li><a href="{{ path('register') }}"> <span class="glyphicon glyphicon-plus-sign"></span> Register</a></li>
                                 </ul>
                             </li>
                         {% endif %}
