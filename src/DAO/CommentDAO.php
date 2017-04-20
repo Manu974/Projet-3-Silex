@@ -16,6 +16,15 @@ class CommentDAO extends DAO
     }
 
     /**
+     * @var \Blog\DAO\UserDAO
+     */
+    private $userDAO;
+
+    public function setUserDAO(UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
+    }
+
+    /**
      * Returns a comment matching the supplied id.
      *
      * @param integer $id The comment id
@@ -88,7 +97,7 @@ class CommentDAO extends DAO
     public function save(Comment $comment) {
         $commentData = array(
             'billet_id' => $comment->getBillet()->getId(),
-            'com_pseudo' => $comment->getPseudo(),
+            'com_pseudo' => $comment->getPseudo()->getId(),
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s'),
             'status'=> $comment->getStatus(),
@@ -115,7 +124,7 @@ class CommentDAO extends DAO
     public function update(Comment $comment) {
         $commentData = array(
             'billet_id' => $comment->getBillet()->getId(),
-            'com_pseudo' => $comment->getPseudo(),
+            'com_pseudo' => $comment->getPseudo()->getId(),
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost(),
             'status'=> $comment->getStatus(),
@@ -162,7 +171,6 @@ class CommentDAO extends DAO
     protected function buildDomainObject(array $row) {
         $comment = new Comment();
         $comment->setId($row['com_id']);
-        $comment->setPseudo($row['com_pseudo']);
         $comment->setDateofpost($row['com_dateofpost']);
         $comment->setContent($row['com_content']);
         $comment->setParent($row['parent']);
@@ -173,6 +181,13 @@ class CommentDAO extends DAO
             $billetId = $row['billet_id'];
             $billet = $this->billetDAO->find($billetId);
             $comment->setBillet($billet);
+        }
+
+         if (array_key_exists('com_pseudo', $row)) {
+            // Find and set the associated author
+            $userId = $row['com_pseudo'];
+            $user = $this->userDAO->find($userId);
+            $comment->setPseudo($user);
         }
         
         return $comment;

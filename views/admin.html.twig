@@ -83,7 +83,7 @@
                 </thead>
                 {% for comment in comments %}
                 <tr class="comment" data-comment-status='{{comment.status}}'>
-                    <td>{{ comment.pseudo }}</td>
+                    <td>{{ comment.pseudo.username}}</td>
                     <td>{{ comment.dateofpost }}</td>
                     <td>{{ comment.content | truncate(60) }}</td>
                     <td><a class="billetTitle" href="{{ path('billet', { 'id': comment.billet.id }) }}">{{ comment.billet.title }}</a></td>

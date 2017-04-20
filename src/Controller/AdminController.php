@@ -19,8 +19,8 @@ class AdminController {
      */
     public function indexAction(Application $app) {
          $billets = $app['dao.billet']->findAll();
-    $comments = $app['dao.comment']->findAll();
-    $users = $app['dao.user']->findAll();
+        $comments = $app['dao.comment']->findAll();
+        $users = $app['dao.user']->findAll();
     return $app['twig']->render('admin.html.twig', array(
         'billets' => $billets,
         'comments' => $comments,

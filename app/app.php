@@ -74,6 +74,7 @@ $app['dao.user']= function ($app){
 $app['dao.comment'] = function ($app) {
     $commentDAO = new Blog\DAO\CommentDAO($app['db']);
     $commentDAO->setBilletDAO($app['dao.billet']);
+    $commentDAO->setUserDAO($app['dao.user']);
     return $commentDAO;
 };
 

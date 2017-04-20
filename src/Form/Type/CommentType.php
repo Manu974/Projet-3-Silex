@@ -13,7 +13,6 @@ class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('pseudo', TextType::class);
         $builder->add('content', TextareaType::class);
         $builder->add('dateofpost', DatetimeType::class, array(
         'data' => new \DateTime('now')));

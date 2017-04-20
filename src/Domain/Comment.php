@@ -12,9 +12,9 @@ class Comment
     private $id;
 
     /**
-     * Comment pseudo.
+     * Associated user.
      *
-     * @var string
+     * @var \Blog\Domain\User
      */
     private $pseudo;
 
@@ -62,12 +62,21 @@ class Comment
         $this->id = $id;
         return $this;
     }
-
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\User
+     */
     public function getPseudo() {
         return $this->pseudo;
     }
-
-    public function setPseudo($pseudo) {
+    
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\User
+     */
+    public function setPseudo(User $pseudo) {
         $this->pseudo = $pseudo;
         return $this;
     }
