@@ -118,6 +118,24 @@ class CommentDAO extends DAO
         return $entities;
     }
 
+    /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAllUnpublish() {
+        return $this->getDb()->query("select COUNT(*) as status from t_comment WHERE status=0")->fetchColumn();
+        
+    }
+
+    /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAllpublish() {
+        return $this->getDb()->query("select COUNT(*) as status from t_comment WHERE status=1")->fetchColumn();     
+    }
 
     /**
      * Saves a comment into the database.

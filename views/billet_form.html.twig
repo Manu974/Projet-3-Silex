@@ -6,7 +6,15 @@
     <script src="{{ asset('/lib/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript">
   tinymce.init({
-    mode: "textareas"
+    mode: "textareas",
+    theme: 'modern',
+     width: 600,
+    height: 300,
+    plugins: [
+  'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+  'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+  'save table contextmenu directionality emoticons template paste textcolor'
+]
     
   });
   </script>

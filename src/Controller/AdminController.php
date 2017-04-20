@@ -21,10 +21,14 @@ class AdminController {
          $billets = $app['dao.billet']->findAll();
         $comments = $app['dao.comment']->findAll();
         $users = $app['dao.user']->findAll();
+        $nbUnPublishComments = $app['dao.comment']->findAllUnpublish();
+        $nbPublishComments = $app['dao.comment']->findAllpublish();
     return $app['twig']->render('admin.html.twig', array(
         'billets' => $billets,
         'comments' => $comments,
-        'users' => $users));
+        'users' => $users,
+        'nbUnPublishComments' => $nbUnPublishComments,
+        'nbPublishComments' => $nbPublishComments));
     }
 
     /**
