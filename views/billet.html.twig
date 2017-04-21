@@ -19,8 +19,10 @@
         {% if comment.status == '1' %}
         <div class="panel panel-success">
         <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong></div>
-        <div class="panel-body">{{ comment.content }}</div>
-         <a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Signaler le commentaire</button></a>  
+        <div class="panel-body">{{ comment.content }} </div>
+        <div><a id="button_report" href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Signaler le commentaire</button></a> </div>
+         
+         
         </div>
         
         {% endif %}
