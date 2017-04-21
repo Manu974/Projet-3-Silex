@@ -32,8 +32,7 @@ body {
     width: 100%;
 }
 
-#button_report{
-
-    margin: 13px;
-
+#report{
+    text-align: right;
+    margin: 10px;
 }
