@@ -138,6 +138,15 @@ class CommentDAO extends DAO
     }
 
     /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAllreport() {
+        return $this->getDb()->query("select COUNT(*) as report from t_comment WHERE report=0")->fetchColumn();     
+    }
+
+    /**
      * Saves a comment into the database.
      *
      * @param \Blog\Domain\Comment $comment The comment to save
