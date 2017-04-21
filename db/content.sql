@@ -14,7 +14,7 @@ insert into t_billet values
 
 
 insert into t_comment values
-('1', '1', '2017-04-14 01:04:07', 'très beau texte et belle accroche', '1', NULL);
+('1', '1', '2017-04-14 01:04:07', 'très beau texte et belle accroche', '1', NULL, NULL);
 
 insert into t_comment values
-('2','1','2017-04-15','superbe intro et tres belle acroche','2','1')
+('2','1','2017-04-15','superbe intro et tres belle acroche','2','1',NULL)

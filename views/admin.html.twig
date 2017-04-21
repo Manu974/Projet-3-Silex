@@ -34,7 +34,7 @@
                 </thead>
                 {% for billet in billets %}
                 <tr>
-                    <td><a class="billetTitle" href="{{ path('billet', { 'id': billet.id }) }}">{{ billet.title }}</a></td>
+                    <td><a class="billetTitle" href="{{ path('billet', { 'billet_id': billet.id }) }}">{{ billet.title }}</a></td>
                     <td>{{ billet.content|raw}}</td>
                     <td>{{ billet.publication}}</td>
                     <td>{{ billet.author.username}}</td>
@@ -82,11 +82,11 @@
                     </tr>
                 </thead>
                 {% for comment in comments %}
-                <tr class="comment" data-comment-status='{{comment.status}}'>
+                <tr class="comment" data-comment-status='{{comment.status}}' data-comment-report='{{comment.report}}'>
                     <td>{{ comment.pseudo.username}}</td>
                     <td>{{ comment.dateofpost }}</td>
                     <td>{{ comment.content | truncate(60) }}</td>
-                    <td><a class="billetTitle" href="{{ path('billet', { 'id': comment.billet.id }) }}">{{ comment.billet.title }}</a></td>
+                    <td><a class="billetTitle" href="{{ path('billet', { 'billet_id': comment.billet.id }) }}">{{ comment.billet.title }}</a></td>
                     <td>
                         <a href="{{ path('admin_comment_edit', { 'id': comment.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                         <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#commentDialog{{ comment.id }}"><span class="glyphicon glyphicon-trash"></span>
@@ -222,9 +222,14 @@
 
         $('tr').each(function(index){
             var statuscomment = $(this).attr("data-comment-status");
+            var reportcomment = $(this).attr("data-comment-report");
            
             if( statuscomment == "0"){
                 $(this).css('background-color', '#FFCC66');
+            }
+
+            if( reportcomment == "0"){
+                $(this).css('background-color', '#FF3333');
             }
             else if (statuscomment =="1"){
                 $(this).css('background-color', '#00CC66')

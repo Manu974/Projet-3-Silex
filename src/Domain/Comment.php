@@ -54,6 +54,13 @@ class Comment
      */
     private $status;
 
+    /**
+     * Comment report.
+     *
+     * @var boolean
+     */
+    private $report;
+
     public function getId() {
         return $this->id;
     }
@@ -123,6 +130,15 @@ class Comment
 
     public function setStatus($status) {
         $this->status = $status;
+        return $this;
+    }
+
+    public function getReport() {
+        return $this->report;
+    }
+
+    public function setReport($report) {
+        $this->report = $report;
         return $this;
     }
 }

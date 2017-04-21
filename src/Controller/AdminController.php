@@ -129,6 +129,7 @@ class AdminController {
     public function publishCommentAction($id, Request $request, Application $app) {
         $comment = $app['dao.comment']->find($id);
         $comment->setStatus('1');
+        $comment->setReport('1');
         $app['dao.comment']->update($comment);
         $app['session']->getFlashBag()->add('success', 'The comment was successfully published.');
         return $app->redirect($app['url_generator']->generate('admin'));

@@ -5,8 +5,12 @@ $app->get('/', "Blog\Controller\HomeController::indexAction")
 ->bind('home');
 
 // Detailed info about an billet
-$app->match('/billet/{id}', "Blog\Controller\HomeController::billetAction")
+$app->match('/billet/{billet_id}', "Blog\Controller\HomeController::billetAction")
 ->bind('billet');
+
+// Detailed info about an billet
+$app->match('/comment/{comment_id}/{billet_id}', "Blog\Controller\HomeController::reportAction")
+->bind('billet_comment_report');
 
 // Login form
 $app->get('/login', "Blog\Controller\HomeController::loginAction")

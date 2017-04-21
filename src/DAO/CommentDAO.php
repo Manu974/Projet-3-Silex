@@ -55,7 +55,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The user won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, parent, status from t_comment where com_pseudo=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, parent, status, report from t_comment where com_pseudo=? order by com_id";
           $result = $this->getDb()->fetchAll($sql, array($userId));
 
       
@@ -85,7 +85,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The billet won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, parent, status from t_comment where billet_id=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, parent, status, report from t_comment where billet_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($billetId));
 
         // Convert query result to an array of domain objects
@@ -149,7 +149,8 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s'),
             'status'=> $comment->getStatus(),
-            'parent'=> $comment->getParent()
+            'parent'=> $comment->getParent(),
+            'report'=> $comment->getReport()
             
             );
         if ($comment->getId()) {
@@ -176,7 +177,8 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost(),
             'status'=> $comment->getStatus(),
-            'parent'=> $comment->getParent()
+            'parent'=> $comment->getParent(),
+            'report'=> $comment->getReport()
             );
         if ($comment->getId()) {
             // The comment has already been saved : update it
@@ -233,6 +235,7 @@ class CommentDAO extends DAO
         $comment->setContent($row['com_content']);
         $comment->setParent($row['parent']);
         $comment->setStatus($row['status']);
+        $comment->setReport($row['report']);
         
         if (array_key_exists('billet_id', $row)) {
             // Find and set the associated billet

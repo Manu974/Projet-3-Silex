@@ -28,8 +28,8 @@ class HomeController {
      * @param Request $request Incoming request
      * @param Application $app Silex application
      */
-    public function billetAction($id, Request $request, Application $app) {
-        $billet = $app['dao.billet']->find($id);
+    public function billetAction($billet_id, Request $request, Application $app) {
+        $billet = $app['dao.billet']->find($billet_id);
         $commentFormView = null;
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
         // A user is fully authenticated : he can add comments
@@ -38,18 +38,19 @@ class HomeController {
         $comment->setBillet($billet);
         $comment->setPseudo($pseudo);
         $comment->setStatus('0');
+        $comment->setReport('1');
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
 
             $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été soumis. il est en cours de modération');
-             return $app->redirect($app['url_generator']->generate('billet', array('id'=> $id)));
+             return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
         }
         $commentFormView = $commentForm->createView();
 
     }
-    $comments = $app['dao.comment']->findAllByBillet($id);
+    $comments = $app['dao.comment']->findAllByBillet($billet_id);
 
     return $app['twig']->render('billet.html.twig', array(
         'billet' => $billet, 
@@ -101,4 +102,21 @@ class HomeController {
         'title' => 'New user',
         'userForm' => $userForm->createView()));
     }
+
+    /**
+     * Article details controller.
+     *
+     * @param integer $id Article id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
+    public function reportAction($comment_id,$billet_id, Request $request, Application $app) {
+        $comment = $app['dao.comment']->find($comment_id);
+        $comment->setReport('0');
+        $app['dao.comment']->update($comment);
+
+         $app['session']->getFlashBag()->add('signalement_success', 'The comment was reported. thanks you');
+        return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
+    }
+        
 }

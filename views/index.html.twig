@@ -8,7 +8,7 @@
   <div class="panel-heading"><h2>{{ billet.title }}</h2></div>
   <div class="panel-body"> <p>{{ billet.content|raw }}</p>
     <p> publié par {{ billet.author.username }}</p>
-    <a class="billetTitle" href="{{ path('billet', { 'id': billet.id }) }}">Commentaires</a></div>
+    <a class="billetTitle" href="{{ path('billet', { 'billet_id': billet.id }) }}">Commentaires</a></div>
 </div>
 
 {% endfor %}
