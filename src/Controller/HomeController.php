@@ -170,6 +170,12 @@ if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
             if ($level == '2') {
                 $commentReply->setLevel('3');
             }
+
+
+            if ($level == '3') {
+                  $app['session']->getFlashBag()->add('warning', 'vous ne pouvez pas repondre à ce commentaire');
+             return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
+            }
         
 
         $commentFormReply = $app['form.factory']->create(CommentType::class, $commentReply);
