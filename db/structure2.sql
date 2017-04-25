@@ -35,7 +35,8 @@ create table t_comment (
 
 create table t_comment_level (
 	cl_id integer not null primary key auto_increment,
-	parent integer not null,
+	parent integer default null,
 	level integer default null,
-     constraint fk_com_parent foreign key(parent) references t_comment(com_id)
+	com_id integer not null,
+     constraint fk_com_id foreign key(com_id) references t_comment(com_id)
 ) engine=innodb character set utf8 collate utf8_unicode_ci;

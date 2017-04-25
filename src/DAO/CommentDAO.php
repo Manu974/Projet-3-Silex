@@ -245,7 +245,7 @@ class CommentDAO extends DAO
     /**
      * Removes a comment from the database.
      *
-     * @param @param integer $id The comment id
+     * @param integer $id The comment id
      */
     public function delete($id) {
         // Delete the comment

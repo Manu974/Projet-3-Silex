@@ -42,7 +42,7 @@ class CommentLevelDAO extends DAO
      * @return \Blog\Domain\CommentLevel|throws an exception if no matching article is found
      */
     public function find($id) {
-        $sql = "select * from t_comment_level where cl_id=?";
+        $sql = "select * from t_comment_level where com_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
         if ($row)
@@ -63,7 +63,7 @@ class CommentLevelDAO extends DAO
         $comment = $this->commentDAO->find($commentId);
 
 
-        $sql = "select cl_id, parent, level where parent=? order by cl_id";
+        $sql = "select cl_id, parent, level, com_id from t_comment_level where com_id=? order by cl_id";
           $result = $this->getDb()->fetchAll($sql, array($commentId));
 
       
@@ -88,8 +88,9 @@ class CommentLevelDAO extends DAO
     public function save(CommentLevel $commentLevel) {
         $commentLevelData = array(
             'cl_id' => $commentLevel->getId(),
-            'parent' => $commentLevel->getParent()->getId(),
-            'level' => $commentLevel->getLevel()
+            'parent' => $commentLevel->getParent(),
+            'level' => $commentLevel->getLevel(),
+            'com_id' => $commentLevel->getComment()->getId()
             );
 
         if ($commentLevel->getId()) {
@@ -111,17 +112,17 @@ class CommentLevelDAO extends DAO
      */
     public function delete($id) {
         // Delete the billet
-        $this->getDb()->delete('t_comment_level', array('cl_id' => $id));
+        $this->getDb()->delete('t_comment_level', array('com_id' => $id));
     }
 
     /**
      * Removes all comments for a user
      *
-     * @param integer $userId The id of the user
+     * @param integer $commentId The id of the user
      */
-    public function deleteAllByUser($userId) {
+    public function deleteAllByComment($commentId) {
 
-        $this->getDb()->delete('t_billet', array('author' => $userId));
+        $this->getDb()->delete('t_comment_level', array('com_id' => $commentId));
     }
 
     
@@ -136,13 +137,14 @@ class CommentLevelDAO extends DAO
         $commentLevel = new CommentLevel();
         $commentLevel->setId($row['cl_id']);
         $commentLevel->setLevel($row['level']);
+        $commentLevel->setParent($row['parent']);
         
 
-         if (array_key_exists('parent', $row)) {
+         if (array_key_exists('com_id', $row)) {
             // Find and set the associated author
-            $commentId = $row['parent'];
+            $commentId = $row['com_id'];
             $comment = $this->commentDAO->find($commentId);
-            $commentLevel->setParent($comment);
+            $commentLevel->setComment($comment);
         }
         return $commentLevel;
     }

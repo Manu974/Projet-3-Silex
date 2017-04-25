@@ -44,7 +44,7 @@ class HomeController {
         $comment->setReport('1');
 
         $commentLevel = new CommentLevel();
-        $commentLevel->setParent($comment);
+        $commentLevel->setComment($comment);
         $commentLevel->setLevel(0);
 
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
@@ -64,7 +64,7 @@ class HomeController {
     }
 
     $comments = $app['dao.comment']->findAllByBillet($billet_id);
-    //$commentsOne = $app['dao.comment']->findAllByBilletCommentLevelOne($billet_id);
+    $commentsLevel = $app['dao.commentlevel']->findAll();
     
     
 
@@ -72,6 +72,7 @@ class HomeController {
     return $app['twig']->render('billet.html.twig', array(
         'billet' => $billet, 
         'comments' => $comments,
+        'commentsLevel' => $commentsLevel,
         'commentForm' => $commentFormView
         ));
     }
@@ -138,45 +139,50 @@ class HomeController {
     }
 
 
-   /*
+   
     public function replyAction($comment_id,$billet_id, Request $request, Application $app) {
             $billet = $app['dao.billet']->find($billet_id);
             $comment = $app['dao.comment']->find($comment_id);
+            $commentLevel = $app['dao.commentlevel']->find($comment_id);
+            $level= $commentLevel->getLevel();
+
             $commentFormViewReply = null;
-            $parentComment= $comment->getParent();
-            $commentId =$comment->getId();
-            $commentLevel = $comment->getLevel();
-    
+            
+
+            
 if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
             $commentReply = new Comment();
             $pseudo = $app['user'];
+            $commentReply->setBillet($billet);
+            $commentReply->setPseudo($pseudo);
+            $commentReply->setStatus('0');
+            $commentReply->setReport('1');
 
-            if ($parentComment == null) {
-                $commentReply->setParent($commentId);
-                $commentReply->setLevel('1');
+            $commentLevelReply = new CommentLevel();
+            $commentLevelReply->setComment($commentReply);
+            $commentLevelReply->setParent($comment_id);
+           
+
+            if ($level == '0') {
+                $commentLevelReply->setLevel('1');
             }
 
-            if ($parentComment == $commentId && $commentLevel == '1' ) {
-                $commentReply->setParent($comment->getId());
-                $commentReply->setLevel('2');
+            if ($level == '1') {
+                $commentLevelReply->setLevel('2');
             }
 
-            if ($parentComment == $commentId && $commentLevel == '2' ) {
-                $commentReply->setParent($comment->getId());
-                $commentReply->setLevel('3');
+            if ($level == '2') {
+                $commentLevelReply->setLevel('3');
             }
-
-        $commentReply->setBillet($billet);
-        $commentReply->setPseudo($pseudo);
-        $commentReply->setStatus('0');
-        $commentReply->setReport('1');
+        
 
         $commentFormReply = $app['form.factory']->create(CommentType::class, $commentReply);
         $commentFormReply->handleRequest($request);
         
         if ($commentFormReply->isSubmitted() && $commentFormReply->isValid()) {
             $app['dao.comment']->save($commentReply);
-
+            $app['dao.commentlevel']->save($commentLevelReply);
+            
             $app['session']->getFlashBag()->add('success_reply', 'Votre commentaire a bien été soumis. il est en cours de modération');
              return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id
                 )));
@@ -187,15 +193,16 @@ if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
         }
 
     $comments = $app['dao.comment']->findAllByBillet($billet_id);
+    
+
 
     return $app['twig']->render('comment_reply.html.twig', array(
         'billet' => $billet, 
         'comments' => $comments,
         'comment' => $comment,
-
         'commentFormReply' => $commentFormViewReply
         ));
 
-    }*/
+    }
         
 }

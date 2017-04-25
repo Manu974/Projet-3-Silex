@@ -15,9 +15,9 @@ class CommentLevel
 
 
     /**
-     * Associated billet.
+     * Comment level.
      *
-      * @var \Blog\Domain\Comment
+     * @var integer
      */
     private $parent;
 
@@ -28,6 +28,13 @@ class CommentLevel
      * @var integer
      */
     private $level;
+
+    /**
+     * Associated billet.
+     *
+      * @var \Blog\Domain\Comment
+     */
+    private $comment;
 
 
 
@@ -41,20 +48,12 @@ class CommentLevel
     }
    
     
-    /**
-     * Returns user.
-     *
-     * @return \Blog\Domain\Comment
-     */
+
     public function getParent() {
         return $this->parent;
     }
-    /**
-     * Returns user.
-     *
-     * @return \Blog\Domain\Comment
-     */
-    public function setParent(Comment $parent) {
+  
+    public function setParent($parent) {
         $this->parent = $parent;
         return $this;
     }
@@ -66,6 +65,24 @@ class CommentLevel
 
     public function setLevel($level) {
         $this->level = $level;
+        return $this;
+    }
+
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\Comment
+     */
+    public function getComment() {
+        return $this->comment;
+    }
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\Comment
+     */
+    public function setComment(Comment $comment) {
+        $this->comment = $comment;
         return $this;
     }
 }
