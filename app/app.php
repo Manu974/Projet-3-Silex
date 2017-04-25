@@ -78,6 +78,13 @@ $app['dao.comment'] = function ($app) {
     return $commentDAO;
 };
 
+$app['dao.commentlevel']= function ($app){
+    $commentLevelDAO = new Blog\DAO\CommentLevelDAO($app['db']);
+    $commentLevelDAO->setCommentDAO($app['dao.comment']);
+   
+    return $commentLevelDAO;
+};
+
 
 // Register error handler
 /*$app->error(function (\Exception $e, Request $request, $code) use ($app) {

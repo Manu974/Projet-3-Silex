@@ -41,9 +41,9 @@ class Comment
 
 
     /**
-     * Comment parent.
+     * Associated billet.
      *
-     * @var integer
+      * @var \Blog\Domain\Comment
      */
     private $parent;
 
@@ -60,6 +60,15 @@ class Comment
      * @var boolean
      */
     private $report;
+
+    /**
+     * Comment level.
+     *
+     * @var integer
+     */
+    private $level;
+
+
 
     public function getId() {
         return $this->id;
@@ -114,12 +123,21 @@ class Comment
         $this->billet = $billet;
         return $this;
     }
-
+    
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\Comment
+     */
     public function getParent() {
         return $this->parent;
     }
-
-    public function setParent($parent) {
+    /**
+     * Returns user.
+     *
+     * @return \Blog\Domain\Comment
+     */
+    public function setParent(Comment $parent) {
         $this->parent = $parent;
         return $this;
     }
@@ -139,6 +157,15 @@ class Comment
 
     public function setReport($report) {
         $this->report = $report;
+        return $this;
+    }
+
+    public function getLevel() {
+        return $this->level;
+    }
+
+    public function setLevel($level) {
+        $this->level = $level;
         return $this;
     }
 }

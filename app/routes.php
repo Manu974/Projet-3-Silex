@@ -12,6 +12,10 @@ $app->match('/billet/{billet_id}', "Blog\Controller\HomeController::billetAction
 $app->match('/comment/{comment_id}/{billet_id}', "Blog\Controller\HomeController::reportAction")
 ->bind('billet_comment_report');
 
+// Detailed info about an billet
+$app->match('/comment/reply/{comment_id}/{billet_id}', "Blog\Controller\HomeController::replyAction")
+->bind('billet_comment_reply');
+
 // Login form
 $app->get('/login', "Blog\Controller\HomeController::loginAction")
 ->bind('login');

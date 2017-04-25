@@ -1,0 +1,47 @@
+
+{% extends "layout.html.twig" %}
+{% block title %}{{ billet.title }}{% endblock %}
+{% block content %}
+
+{% block comments %}
+<div class="panel panel-success">
+        <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong></div>
+        <div class="panel-body">{{ comment.content }}</div>
+
+        {% for flashMessage in app.session.flashbag.get('success_reply') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {% if commentFormReply %}
+        {{ form_start(commentFormReply,{ 'attr': {'class': 'form-horizontal'} }) }}
+            <div class="form-group" id="commentReply">
+                {{ form_errors(commentFormReply.content) }}
+                {{ form_widget(commentFormReply.content, { 'attr':  {
+                    'rows': '4',
+                    'class': 'form-control',
+                    'placeholder': 'Enter your comment'
+                }}) }}
+            </div>
+
+            <div class="form-group" style="display: none">
+                {{ form_errors(commentFormReply.dateofpost) }}
+                {{ form_widget(commentFormReply.dateofpost, { 'attr':  {
+                    'rows': '6',
+                    'class': 'form-control',
+                    'placeholder': 'date to your commentaire'
+                }}) }}
+            </div>
+            <div class="form-group" id="reply">
+                <input  type="submit" class="btn btn-primary" value="Reply"/>
+            </div>
+        {{ form_end(commentFormReply) }}
+        
+         {% endif %}
+
+         <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+        </div>
+
+{% endblock %}
+{% endblock %}
+

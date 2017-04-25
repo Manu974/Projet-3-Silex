@@ -32,7 +32,13 @@ body {
     width: 100%;
 }
 
-#report{
+#report,#reply{
     text-align: right;
     margin: 10px;
+}
+
+#commentReply{
+
+    margin-left: 1%;
+    width: 98%;
 }

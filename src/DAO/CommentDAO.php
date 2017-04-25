@@ -24,6 +24,7 @@ class CommentDAO extends DAO
         $this->userDAO = $userDAO;
     }
 
+
     /**
      * Returns a comment matching the supplied id.
      *
@@ -55,7 +56,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The user won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, parent, status, report from t_comment where com_pseudo=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, status, report from t_comment where com_pseudo=? order by com_id";
           $result = $this->getDb()->fetchAll($sql, array($userId));
 
       
@@ -85,7 +86,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The billet won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, parent, status, report from t_comment where billet_id=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report from t_comment where billet_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($billetId));
 
         // Convert query result to an array of domain objects
@@ -146,6 +147,36 @@ class CommentDAO extends DAO
         return $this->getDb()->query("select COUNT(*) as report from t_comment WHERE report=0")->fetchColumn();     
     }
 
+  
+
+    /**
+     * Return a list of all comments for an billet, sorted by date (most recent last).
+     *
+     * @param integer $billetId The billet id.
+     *
+     * @return array A list of all comments for the billet.
+     */
+    public function findAllByComment($commentId) {
+        // The associated billet is retrieved only once
+        $billet = $this->billetDAO->find($billetId);
+
+        // art_id is not selected by the SQL query
+        // The billet won't be retrieved during domain objet construction
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report from t_comment where billet_id=? order by com_id";
+        $result = $this->getDb()->fetchAll($sql, array($billetId));
+
+        // Convert query result to an array of domain objects
+        $comments = array();
+        foreach ($result as $row) {
+            $comId = $row['com_id'];
+            $comment = $this->buildDomainObject($row);
+            // The associated billet is defined for the constructed comment
+            $comment->setBillet($billet);
+            $comments[$comId] = $comment;
+        }
+        return $comments;
+    }
+
     /**
      * Saves a comment into the database.
      *
@@ -158,9 +189,9 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s'),
             'status'=> $comment->getStatus(),
-            'parent'=> $comment->getParent(),
-            'report'=> $comment->getReport()
             
+            'report'=> $comment->getReport()
+                      
             );
         if ($comment->getId()) {
             // The comment has already been saved : update it
@@ -186,8 +217,9 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost(),
             'status'=> $comment->getStatus(),
-            'parent'=> $comment->getParent(),
+          
             'report'=> $comment->getReport()
+          
             );
         if ($comment->getId()) {
             // The comment has already been saved : update it
@@ -242,10 +274,11 @@ class CommentDAO extends DAO
         $comment->setId($row['com_id']);
         $comment->setDateofpost($row['com_dateofpost']);
         $comment->setContent($row['com_content']);
-        $comment->setParent($row['parent']);
         $comment->setStatus($row['status']);
         $comment->setReport($row['report']);
-        
+       
+
+
         if (array_key_exists('billet_id', $row)) {
             // Find and set the associated billet
             $billetId = $row['billet_id'];
@@ -257,8 +290,11 @@ class CommentDAO extends DAO
             // Find and set the associated author
             $userId = $row['com_pseudo'];
             $user = $this->userDAO->find($userId);
+        
             $comment->setPseudo($user);
         }
+
+
         
         return $comment;
     }

@@ -5,6 +5,7 @@ namespace Blog\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Blog\Domain\Comment;
+use Blog\Domain\CommentLevel;
 use Blog\Form\Type\CommentType;
 use Blog\Domain\User;
 use Blog\Form\Type\UserType;
@@ -31,31 +32,48 @@ class HomeController {
     public function billetAction($billet_id, Request $request, Application $app) {
         $billet = $app['dao.billet']->find($billet_id);
         $commentFormView = null;
+
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
         // A user is fully authenticated : he can add comments
         $comment = new Comment();
         $pseudo = $app['user'];
+
         $comment->setBillet($billet);
         $comment->setPseudo($pseudo);
         $comment->setStatus('0');
         $comment->setReport('1');
+
+        $commentLevel = new CommentLevel();
+        $commentLevel->setParent($comment);
+        $commentLevel->setLevel(0);
+
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
+
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
+             $app['dao.commentlevel']->save($commentLevel);
+
 
             $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été soumis. il est en cours de modération');
              return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
         }
+
         $commentFormView = $commentForm->createView();
 
     }
+
     $comments = $app['dao.comment']->findAllByBillet($billet_id);
+    //$commentsOne = $app['dao.comment']->findAllByBilletCommentLevelOne($billet_id);
+    
+    
+
 
     return $app['twig']->render('billet.html.twig', array(
         'billet' => $billet, 
         'comments' => $comments,
-        'commentForm' => $commentFormView));
+        'commentForm' => $commentFormView
+        ));
     }
     
     /**
@@ -118,5 +136,66 @@ class HomeController {
          $app['session']->getFlashBag()->add('signalement_success', 'The comment was reported. thanks you');
         return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
     }
+
+
+   /*
+    public function replyAction($comment_id,$billet_id, Request $request, Application $app) {
+            $billet = $app['dao.billet']->find($billet_id);
+            $comment = $app['dao.comment']->find($comment_id);
+            $commentFormViewReply = null;
+            $parentComment= $comment->getParent();
+            $commentId =$comment->getId();
+            $commentLevel = $comment->getLevel();
+    
+if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $commentReply = new Comment();
+            $pseudo = $app['user'];
+
+            if ($parentComment == null) {
+                $commentReply->setParent($commentId);
+                $commentReply->setLevel('1');
+            }
+
+            if ($parentComment == $commentId && $commentLevel == '1' ) {
+                $commentReply->setParent($comment->getId());
+                $commentReply->setLevel('2');
+            }
+
+            if ($parentComment == $commentId && $commentLevel == '2' ) {
+                $commentReply->setParent($comment->getId());
+                $commentReply->setLevel('3');
+            }
+
+        $commentReply->setBillet($billet);
+        $commentReply->setPseudo($pseudo);
+        $commentReply->setStatus('0');
+        $commentReply->setReport('1');
+
+        $commentFormReply = $app['form.factory']->create(CommentType::class, $commentReply);
+        $commentFormReply->handleRequest($request);
+        
+        if ($commentFormReply->isSubmitted() && $commentFormReply->isValid()) {
+            $app['dao.comment']->save($commentReply);
+
+            $app['session']->getFlashBag()->add('success_reply', 'Votre commentaire a bien été soumis. il est en cours de modération');
+             return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id
+                )));
+        }
+
+        $commentFormViewReply = $commentFormReply->createView();
+
+        }
+
+    $comments = $app['dao.comment']->findAllByBillet($billet_id);
+
+    return $app['twig']->render('comment_reply.html.twig', array(
+        'billet' => $billet, 
+        'comments' => $comments,
+        'comment' => $comment,
+
+        'commentFormReply' => $commentFormViewReply
+        ));
+
+    }*/
         
 }

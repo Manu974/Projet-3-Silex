@@ -8,28 +8,36 @@
   <div class="panel-body"><p>{{ billet.content|raw }}</p></div>
 </div>
 <p>
+
+{% block comments %}
     <h3>Comments</h3>
 {% for flashMessage in app.session.flashbag.get('signalement_success') %}
             <div class="alert alert-danger">
                 {{ flashMessage }}
             </div>
         {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success_reply') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
     {% if comments %}
     {% for comment in comments %}
-        {% if comment.status == '1' %}
+        {% if comment.status == '1'%}
         <div class="panel panel-success">
         <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong></div>
-        <div class="panel-body">{{ comment.content }} </div>
+        <div class="panel-body">{{ comment.content }}</div>
+
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+
         <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
-         
-         
         </div>
-        
         {% endif %}
         {% endfor %}
     {% else %}
      No comments yet.
     {% endif %}
+    {% endblock %}
 
     <h3>Add a comment</h3>
 {% for flashMessage in app.session.flashbag.get('success') %}
