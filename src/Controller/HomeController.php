@@ -42,17 +42,16 @@ class HomeController {
         $comment->setPseudo($pseudo);
         $comment->setStatus('0');
         $comment->setReport('1');
+        $comment->setLevel(0);
 
-        $commentLevel = new CommentLevel();
-        $commentLevel->setComment($comment);
-        $commentLevel->setLevel(0);
+        
 
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
-             $app['dao.commentlevel']->save($commentLevel);
+             
 
 
             $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été soumis. il est en cours de modération');
@@ -64,15 +63,13 @@ class HomeController {
     }
 
     $comments = $app['dao.comment']->findAllByBillet($billet_id);
-    $commentsLevel = $app['dao.commentlevel']->findAll();
+    $commentslevel1 = $app['dao.comment']->findAllLevelOne();
     
-    
-
 
     return $app['twig']->render('billet.html.twig', array(
         'billet' => $billet, 
         'comments' => $comments,
-        'commentsLevel' => $commentsLevel,
+          'commentslevel1' => $commentslevel1,
         'commentForm' => $commentFormView
         ));
     }
@@ -143,13 +140,11 @@ class HomeController {
     public function replyAction($comment_id,$billet_id, Request $request, Application $app) {
             $billet = $app['dao.billet']->find($billet_id);
             $comment = $app['dao.comment']->find($comment_id);
-            $commentLevel = $app['dao.commentlevel']->find($comment_id);
-            $level= $commentLevel->getLevel();
-
+            $level= $comment->getLevel();
             $commentFormViewReply = null;
+            $commentParent = $comment->getParent();
             
-
-            
+    
 if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
             $commentReply = new Comment();
             $pseudo = $app['user'];
@@ -157,22 +152,19 @@ if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
             $commentReply->setPseudo($pseudo);
             $commentReply->setStatus('0');
             $commentReply->setReport('1');
+            $commentReply->setParent($comment->getId());
+            
 
-            $commentLevelReply = new CommentLevel();
-            $commentLevelReply->setComment($commentReply);
-            $commentLevelReply->setParent($comment_id);
-           
-
-            if ($level == '0') {
-                $commentLevelReply->setLevel('1');
+            if ($level == '0'| $level==null ) {
+                $commentReply->setLevel('1');
             }
 
             if ($level == '1') {
-                $commentLevelReply->setLevel('2');
+                $commentReply->setLevel('2');
             }
 
             if ($level == '2') {
-                $commentLevelReply->setLevel('3');
+                $commentReply->setLevel('3');
             }
         
 
@@ -180,9 +172,7 @@ if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
         $commentFormReply->handleRequest($request);
         
         if ($commentFormReply->isSubmitted() && $commentFormReply->isValid()) {
-            $app['dao.comment']->save($commentReply);
-            $app['dao.commentlevel']->save($commentLevelReply);
-            
+            $app['dao.comment']->save($commentReply);           
             $app['session']->getFlashBag()->add('success_reply', 'Votre commentaire a bien été soumis. il est en cours de modération');
              return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id
                 )));

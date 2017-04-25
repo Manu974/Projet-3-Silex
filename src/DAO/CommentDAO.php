@@ -56,7 +56,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The user won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, status, report from t_comment where com_pseudo=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content,billet_id, status, report, parent, level from t_comment where com_pseudo=? order by com_id";
           $result = $this->getDb()->fetchAll($sql, array($userId));
 
       
@@ -86,7 +86,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The billet won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report from t_comment where billet_id=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report, parent, level from t_comment where billet_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($billetId));
 
         // Convert query result to an array of domain objects
@@ -147,6 +147,24 @@ class CommentDAO extends DAO
         return $this->getDb()->query("select COUNT(*) as report from t_comment WHERE report=0")->fetchColumn();     
     }
 
+
+   /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAllLevelOne() {
+        $sql = "select * from t_comment WHERE level =1";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $entities = array();
+        foreach ($result as $row) {
+            $id = $row['com_id'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+        return $entities;
+    }
   
 
     /**
@@ -162,7 +180,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The billet won't be retrieved during domain objet construction
-        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report from t_comment where billet_id=? order by com_id";
+        $sql = "select com_id, com_pseudo, com_dateofpost, com_content, status, report, parent, level from t_comment where billet_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($billetId));
 
         // Convert query result to an array of domain objects
@@ -189,8 +207,9 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost()->format('Y-m-d H:i:s'),
             'status'=> $comment->getStatus(),
-            
-            'report'=> $comment->getReport()
+            'report'=> $comment->getReport(),
+            'parent'=> $comment->getParent(),
+            'level'=> $comment->getLevel()
                       
             );
         if ($comment->getId()) {
@@ -217,8 +236,9 @@ class CommentDAO extends DAO
             'com_content' => $comment->getContent(),
             'com_dateofpost' => $comment->getDateofpost(),
             'status'=> $comment->getStatus(),
-          
-            'report'=> $comment->getReport()
+            'report'=> $comment->getReport(),
+            'parent'=> $comment->getParent(),
+            'level'=> $comment->getLevel()
           
             );
         if ($comment->getId()) {
@@ -276,6 +296,8 @@ class CommentDAO extends DAO
         $comment->setContent($row['com_content']);
         $comment->setStatus($row['status']);
         $comment->setReport($row['report']);
+        $comment->setParent($row['parent']);
+        $comment->setLevel($row['level']);
        
 
 

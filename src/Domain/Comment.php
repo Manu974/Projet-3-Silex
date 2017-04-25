@@ -53,6 +53,20 @@ class Comment
      */
     private $report;
 
+     /**
+     * Comment parent.
+     *
+     * @var integer
+     */
+    private $parent;
+
+      /**
+     * Comment level.
+     *
+     * @var integer
+     */
+    private $level;
+
 
 
 
@@ -125,6 +139,24 @@ class Comment
 
     public function setReport($report) {
         $this->report = $report;
+        return $this;
+    }
+
+    public function getParent() {
+        return $this->parent;
+    }
+
+    public function setParent($parent) {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    public function getLevel() {
+        return $this->level;
+    }
+
+    public function setLevel($level) {
+        $this->level = $level;
         return $this;
     }
 
