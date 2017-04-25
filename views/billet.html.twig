@@ -52,6 +52,20 @@
         <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
 
         <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+
+                         {% for commentlevel3 in commentslevel3 if commentlevel3.level==3 %}
+          {% if commentlevel3.status == '1' and commentlevel3.parent == commentlevel2.id%}
+
+        <div class="panel panel-success">
+        <div class="panel-heading"><strong>{{ commentlevel3.pseudo.username}} at {{commentlevel3.dateofpost}}</strong></div>
+        <div class="panel-body">{{ commentlevel3.content }}</div>
+
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel3.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+
+        <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel3.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+        </div>
+        {% endif %}
+        {% endfor %}
         </div>
         {% endif %}
         {% endfor %}
