@@ -64,12 +64,16 @@ class HomeController {
 
     $comments = $app['dao.comment']->findAllByBillet($billet_id);
     $commentslevel1 = $app['dao.comment']->findAllLevelOne();
+    $commentslevel2 = $app['dao.comment']->findAllLevelTwo();
+    $commentslevel3 = $app['dao.comment']->findAllLevelThree();
     
 
     return $app['twig']->render('billet.html.twig', array(
         'billet' => $billet, 
         'comments' => $comments,
           'commentslevel1' => $commentslevel1,
+          'commentslevel2' => $commentslevel2,
+          'commentslevel3' => $commentslevel3,
         'commentForm' => $commentFormView
         ));
     }

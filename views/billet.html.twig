@@ -39,9 +39,22 @@
         <div class="panel-heading"><strong>{{ commentlevel1.pseudo.username}} at {{commentlevel1.dateofpost}}</strong></div>
         <div class="panel-body">{{ commentlevel1.content }}</div>
 
-        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel1.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
 
-        <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+        <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel1.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+                                   {% for commentlevel2 in commentslevel2 if commentlevel2.level==2 %}
+          {% if commentlevel2.status == '1' and commentlevel2.parent == commentlevel1.id%}
+
+        <div class="panel panel-success">
+        <div class="panel-heading"><strong>{{ commentlevel2.pseudo.username}} at {{commentlevel2.dateofpost}}</strong></div>
+        <div class="panel-body">{{ commentlevel2.content }}</div>
+
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+
+        <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+        </div>
+        {% endif %}
+        {% endfor %}
         </div>
         {% endif %}
         {% endfor %}
