@@ -21,11 +21,12 @@
                 {{ flashMessage }}
             </div>
         {% endfor %}
+        <div id="content">
     {% if comments %}
     {% for comment in comments if comment.level == 0 %}
         {% if comment.status == '1'%}
 
-        <div class="panel panel-success">
+        <div class="panel panel-success level0">
         <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a> </div>
         <div class="panel-body">{{ comment.content }}</div>
 
@@ -75,6 +76,9 @@
     {% else %}
      No comments yet.
     {% endif %}
+    </div>
+
+    <div id="page_navigation"> </div>
     {% endblock %}
 
     <h3>Add a comment</h3>
@@ -111,4 +115,58 @@
         <a href="{{ path('login') }}">Log in</a> to add comments.
     {% endif %}
 </p>
+{% endblock %}
+
+{% block script %}
+
+{{parent()}}
+<script> 
+
+    var show_per_page = 1; 
+    var current_page = 0;
+
+    function set_display(first, last) {
+      $('#content > div.level0').css('display', 'none');
+      $('#content > div.level0').slice(first, last).css('display', 'block');
+      
+    }
+
+    function previous(){
+        if($('.active').prev('.page_link').length) go_to_page(current_page - 1);
+    }
+
+    function next(){
+        if($('.active').next('.page_link').length) go_to_page(current_page + 1);
+    }
+
+    function go_to_page(page_num){
+      current_page = page_num;
+      start_from = current_page * show_per_page;
+      end_on = start_from + show_per_page;
+      set_display(start_from, end_on);
+      $('.active').removeClass('active');
+      $('#id' + page_num).addClass('active');
+    }  
+
+    $(document).ready(function() {
+
+      var number_of_pages = Math.ceil($('#content > div.level0').length / show_per_page);
+      
+      var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
+
+      var i = -1;
+      while(number_of_pages > ++i){
+        nav += '<li class="page_link'
+        if(!i) nav += ' active';
+        nav += '" id="id' + i +'">';
+        nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1) +'</a>';
+      }
+      nav += '<li><a href="javascript:next();">&raquo;</a></ul>';
+
+      $('#page_navigation').html(nav);
+      set_display(0, show_per_page);
+      
+    });
+
+  </script>
 {% endblock %}
