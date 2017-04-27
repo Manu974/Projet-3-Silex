@@ -12,7 +12,7 @@
     height: 300,
     language: 'fr_FR',
     plugins: [
-  'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker textcolor',
+  'wordcount visualchars advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker textcolor',
   'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
   'save table contextmenu directionality emoticons template paste textcolor'
 ]
@@ -50,6 +50,7 @@
         <div class="col-sm-6" id="pop">
             {{ form_errors(billetForm.content) }}
             {{ form_widget(billetForm.content, { 'attr':  {
+                'id' : 'le',
                 'class': 'form-control',
                 'rows': '8'
             }}) }}
@@ -69,7 +70,7 @@
         </div>
     </div>
     <div id="resultat"></div>
-
+<div id="compteur2" class="label label-success"> 0 mots - 0 Caractere / 5000</div>
   {{ form_widget(billetForm.valider, {'attr': {'class': 'btn btn-primary'}}) }}
     
 {{ form_end(billetForm) }}
@@ -80,12 +81,31 @@
 
 {{parent()}}
 <script> 
+    function count_carac(){
+      $('.mce-container').keyup(function(){
 
-   $(function() {
-    $('#document').on('change',function(){
-        console.log("a");   });
+        var nombreCaracter = $(this).val().length;
 
-   });
+        var nombreMots = jQuery.trim($(this).val()).split(' ').length;
+        if($(this).val() === '') {
+          nombreMots = 0 ;
+        }
+
+        var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
+        $('#compteur2').text(msg);
+        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
+
+        else{
+          $('#compteur2').removeClass('label-danger').addClass('label-success');
+        }
+      });
+    } 
+
+    $(document).ready(function() {
+      count_carac();
+    });
+
+
   </script>
 {% endblock %}
 

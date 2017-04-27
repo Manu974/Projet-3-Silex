@@ -32,6 +32,7 @@
                     'placeholder': 'date to your commentaire'
                 }}) }}
             </div>
+            <div id="compteur2" class="label label-success"> 0 mots - 0 Caractere / 200</div>
             <div class="form-group" id="reply">
                 <input  type="submit" class="btn btn-primary" value="Répondre"/>
             </div>
@@ -43,5 +44,36 @@
         </div>
 
 {% endblock %}
+{% endblock %}
+{% block script %}
+
+{{parent()}}
+<script> 
+    function count_carac(){
+      $('#comment_content').keyup(function(){
+
+        var nombreCaracter = $(this).val().length;
+
+        var nombreMots = jQuery.trim($(this).val()).split(' ').length;
+        if($(this).val() === '') {
+          nombreMots = 0 ;
+        }
+
+        var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
+        $('#compteur2').text(msg);
+        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
+
+        else{
+          $('#compteur2').removeClass('label-danger').addClass('label-success');
+        }
+      });
+    } 
+
+    $(document).ready(function() {
+      count_carac();
+    });
+
+
+  </script>
 {% endblock %}
 
