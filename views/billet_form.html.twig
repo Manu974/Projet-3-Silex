@@ -12,7 +12,7 @@
     height: 300,
     language: 'fr_FR',
     plugins: [
-  'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+  'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker textcolor',
   'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
   'save table contextmenu directionality emoticons template paste textcolor'
 ]
@@ -68,10 +68,24 @@
             }}) }}
         </div>
     </div>
+    <div id="resultat"></div>
 
   {{ form_widget(billetForm.valider, {'attr': {'class': 'btn btn-primary'}}) }}
     
 {{ form_end(billetForm) }}
 </div>
+{% endblock %}
+
+{% block script %}
+
+{{parent()}}
+<script> 
+
+   $(function() {
+    $('#document').on('change',function(){
+        console.log("a");   });
+
+   });
+  </script>
 {% endblock %}
 

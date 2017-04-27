@@ -42,3 +42,16 @@ body {
     margin-left: 1%;
     width: 98%;
 }
+
+.level2{
+    background-color: #dbd9f7;
+}
+
+#compteur{
+    float: right;
+    margin: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    font: 12px Verdana;
+}
+

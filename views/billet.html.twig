@@ -106,10 +106,12 @@
                     'placeholder': 'date to your commentaire'
                 }}) }}
             </div>
+            <div id="compteur" class="label label-success"> 0 mots - 0 Caractere / 200</div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Publier le commentaire"/>
             </div>
         {{ form_end(commentForm) }}
+        
         
     {% else %}
         <a href="{{ path('login') }}">Se connecter</a> pour ajouter des commentaires
@@ -122,7 +124,7 @@
 {{parent()}}
 <script> 
 
-    var show_per_page = 1; 
+    var show_per_page = 4; 
     var current_page = 0;
 
     function set_display(first, last) {
@@ -146,7 +148,27 @@
       set_display(start_from, end_on);
       $('.active').removeClass('active');
       $('#id' + page_num).addClass('active');
-    }  
+    } 
+
+    function count_carac(){
+      $('#comment_content').keyup(function(){
+
+        var nombreCaracter = $(this).val().length;
+
+        var nombreMots = jQuery.trim($(this).val()).split(' ').length;
+        if($(this).val() === '') {
+          nombreMots = 0 ;
+        }
+
+        var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
+        $('#compteur').text(msg);
+        if(nombreCaracter > 200) { $('#compteur').removeClass('label-success').addClass('label-danger');}
+
+        else{
+          $('#compteur').removeClass('label-danger').addClass('label-success');
+        }
+      });
+    } 
 
     $(document).ready(function() {
 
@@ -165,8 +187,13 @@
 
       $('#page_navigation').html(nav);
       set_display(0, show_per_page);
+      count_carac();
+
+      
+      
       
     });
+
 
   </script>
 {% endblock %}
