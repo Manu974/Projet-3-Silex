@@ -51,7 +51,7 @@ class AdminController {
 
         if ($billetForm->isSubmitted() && $billetForm->isValid()) {
         $app['dao.billet']->save($billet);
-        $app['session']->getFlashBag()->add('success', 'The billet was successfully created.');
+        $app['session']->getFlashBag()->add('success', 'Le billet a été publié.');
         return $app->redirect($app['url_generator']->generate('admin_billet_add'));
         }
 
@@ -76,7 +76,7 @@ class AdminController {
     $billetForm->handleRequest($request);
     if ($billetForm->isSubmitted() && $billetForm->isValid()) {
         $app['dao.billet']->save($billet);
-        $app['session']->getFlashBag()->add('success', 'The billet was successfully updated.');
+        $app['session']->getFlashBag()->add('success', 'Le billet a été mise à jour.');
          return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('billet_form.html.twig', array(
@@ -95,7 +95,7 @@ class AdminController {
     $app['dao.comment']->deleteAllByBillet($id);
     // Delete the billet
     $app['dao.billet']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'The billet was successfully removed.');
+    $app['session']->getFlashBag()->add('success', 'le billet a été supprimé.');
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
     }
@@ -113,7 +113,7 @@ class AdminController {
     $commentForm->handleRequest($request);
     if ($commentForm->isSubmitted() && $commentForm->isValid()) {
         $app['dao.comment']->save($comment);
-        $app['session']->getFlashBag()->add('success', 'The comment was successfully updated.');
+        $app['session']->getFlashBag()->add('success', 'le commentaire a été mise à jour.');
          return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('comment_form.html.twig', array(
@@ -133,7 +133,7 @@ class AdminController {
         $comment->setStatus('1');
         $comment->setReport('1');
         $app['dao.comment']->update($comment);
-        $app['session']->getFlashBag()->add('success', 'The comment was successfully published.');
+        $app['session']->getFlashBag()->add('success', 'Le commentaire a été publié.');
         return $app->redirect($app['url_generator']->generate('admin'));
        
     }
@@ -171,7 +171,7 @@ class AdminController {
         $app['dao.commentlevel']->delete($id);
         $app['dao.comment']->delete($id);
 
-    $app['session']->getFlashBag()->add('success', 'The comment was successfully removed.');
+    $app['session']->getFlashBag()->add('success', 'Le commentaire a été supprimé.');
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
     }
@@ -197,7 +197,7 @@ class AdminController {
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        $app['session']->getFlashBag()->add('success', "L'utilisateur a été crée.");
         return $app->redirect($app['url_generator']->generate('admin_user_add'));
     }
     return $app['twig']->render('user_form.html.twig', array(
@@ -224,7 +224,7 @@ class AdminController {
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully updated.');
+        $app['session']->getFlashBag()->add('success', "L'utilisateur a été mise à jour.");
         return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('user_form.html.twig', array(
@@ -244,7 +244,7 @@ class AdminController {
     $app['dao.billet']->deleteAllByUser($id);
     // Delete the user
     $app['dao.user']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'The user was successfully removed.');
+    $app['session']->getFlashBag()->add('success', "L'utilisateur a été supprimé.");
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
     }

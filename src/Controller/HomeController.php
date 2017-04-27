@@ -115,7 +115,7 @@ class HomeController {
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('register_success', 'The user was successfully created. you can connect you now');
+        $app['session']->getFlashBag()->add('register_success', 'Utilisateur enregistrer, vous pouvez vous connecter maintenant');
         return $app->redirect($app['url_generator']->generate('login'));
     }
     return $app['twig']->render('register.html.twig', array(
@@ -135,7 +135,7 @@ class HomeController {
         $comment->setReport('0');
         $app['dao.comment']->update($comment);
 
-         $app['session']->getFlashBag()->add('signalement_success', 'The comment was reported. thanks you');
+         $app['session']->getFlashBag()->add('signalement_success', 'Le commentaire est signaler, Merci');
         return $app->redirect($app['url_generator']->generate('billet', array('billet_id'=> $billet_id)));
     }
 
