@@ -14,8 +14,8 @@
     <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a href="#billets" data-toggle="tab">Billets</a></li>
-            <li id="ongletcomment"><a href="#comments" data-toggle="tab">Comments <span class="label label-warning"> {{nbUnPublishComments}} en attente</span> <span class="label label-info"> {{nbPublishComments}} publiés</span> <span class="label label-danger"> {{nbReportComments}} signalés</span> </a></li>
-            <li><a href="#users" data-toggle="tab">Users</a></li>
+            <li id="ongletcomment"><a href="#comments" data-toggle="tab">Commentaires <span class="label label-warning"> {{nbUnPublishComments}} en attente</span> <span class="label label-info"> {{nbPublishComments}} publiés</span> <span class="label label-danger"> {{nbReportComments}} signalés</span> </a></li>
+            <li><a href="#users" data-toggle="tab">Utilisateurs</a></li>
         </ul>
     </div>
 </div>
@@ -26,10 +26,10 @@
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Publication</th>
-                        <th>Author</th>   <!-- Actions column -->
+                        <th>Titre</th>
+                        <th>Contenu</th>
+                        <th>Date de publication</th>
+                        <th>Auteur</th>   <!-- Actions column -->
                     </tr>
                 </thead>
                 {% for billet in billets %}
@@ -47,14 +47,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to delete this billet ?
+                                        Voulez-vous supprimer définitivement ce billet ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('admin_billet_delete', { 'id': billet.id }) }}" class="btn btn-danger">Confirmer</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -65,9 +65,9 @@
             </table>
         </div>
         {% else %}
-        <div class="alert alert-warning">No articles found.</div>
+        <div class="alert alert-warning">Pas de billet publié</div>
         {% endif %}
-        <a href="{{ path('admin_billet_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add billet</button></a>
+        <a href="{{ path('admin_billet_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter un billet</button></a>
     </div>
     <div class="tab-pane fade adminTable" id="comments">
         {% if comments %}
@@ -76,9 +76,9 @@
                 <thead>
                     <tr>
                         <th>Pseudo</th>
-                        <th>Author</th>
-                        <th>Content</th>
-                        <th>Billet</th>  <!-- Actions column -->
+                        <th>Date de publication</th>
+                        <th>Contenu</th>
+                        <th>Pour le Billet</th>  <!-- Actions column -->
                     </tr>
                 </thead>
                 {% for comment in comments %}
@@ -96,14 +96,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to delete this comment ?
+                                        Voulez-vous supprimer définitivement ce commentaire ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{{ path('admin_comment_delete', { 'id': comment.id }) }}" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('admin_comment_delete', { 'id': comment.id }) }}" class="btn btn-danger">Confirmer</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -115,14 +115,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to publish this comment ?
+                                        Voulez-vous publier ce commentaire ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{{ path('admin_comment_publish', { 'id': comment.id }) }}" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('admin_comment_publish', { 'id': comment.id }) }}" class="btn btn-danger">Confirmer</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -135,14 +135,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to hide this comment ?
+                                        Voulez-vous enlever ce commentaire ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{{ path('admin_comment_dontpublish', { 'id': comment.id }) }}" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('admin_comment_dontpublish', { 'id': comment.id }) }}" class="btn btn-danger">Confirmer</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -153,7 +153,7 @@
             </table>
         </div>
         {% else %}
-        <div class="alert alert-warning">No comments found.</div>
+        <div class="alert alert-warning">Auncun commentaires</div>
         {% endif %}
         
     </div>
@@ -163,9 +163,8 @@
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Identifiant</th>
                         <th>Role</th>
-                        <th></th>  <!-- Actions column -->
                     </tr>
                 </thead>
                 {% for user in users %}
@@ -173,9 +172,9 @@
                     <td>{{ user.username }}</a></td>
                     <td>
                         {% if user.role == 'ROLE_ADMIN' %}
-                            Admin
+                            Administrateur
                         {% else %}
-                            User
+                            Utilisateur
                         {% endif %}
                     </td>
                     <td>
@@ -187,14 +186,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to delete this user ?
+                                        Voulez-vous supprimer cet utilisateur définitivement ?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{{ path('admin_user_delete', { 'id': user.id }) }}" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('admin_user_delete', { 'id': user.id }) }}" class="btn btn-danger">Confirmer</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -205,9 +204,9 @@
             </table>
         </div>
         {% else %}
-        <div class="alert alert-warning">No users found.</div>
+        <div class="alert alert-warning">Auncun utilisateur</div>
         {% endif %}
-        <a href="{{ path('admin_user_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add user</button></a>        
+        <a href="{{ path('admin_user_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter un Utilisateur</button></a>        
     </div>
 </div>
 

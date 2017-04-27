@@ -10,7 +10,7 @@
 <p>
 
 {% block comments %}
-    <h3>Comments</h3>
+    <h3>Commentaires</h3>
 {% for flashMessage in app.session.flashbag.get('signalement_success') %}
             <div class="alert alert-danger">
                 {{ flashMessage }}
@@ -30,7 +30,7 @@
         <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a> </div>
         <div class="panel-body">{{ comment.content }}</div>
 
-        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Répondre</button></a> </div>
 
       
                                           {% for commentlevel1 in commentslevel1 if commentlevel1.level==1 %}
@@ -40,7 +40,7 @@
         <div class="panel-heading"><strong>{{ commentlevel1.pseudo.username}} at {{commentlevel1.dateofpost}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel1.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a></div>
         <div class="panel-body">{{ commentlevel1.content }}</div>
 
-        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel1.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel1.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Répondre</button></a> </div>
 
        
                                    {% for commentlevel2 in commentslevel2 if commentlevel2.level==2 %}
@@ -50,7 +50,7 @@
         <div class="panel-heading"><strong>{{ commentlevel2.pseudo.username}} at {{commentlevel2.dateofpost}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a></div>
         <div class="panel-body">{{ commentlevel2.content }}</div>
 
-        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Reply</button></a> </div>
+        <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': commentlevel2.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Répondre</button></a> </div>
 
         
 
@@ -74,14 +74,14 @@
         {% endif %}
         {% endfor %}
     {% else %}
-     No comments yet.
+     Pas de commentaires publiés
     {% endif %}
     </div>
 
     <div id="page_navigation"> </div>
     {% endblock %}
 
-    <h3>Add a comment</h3>
+    <h3>Ajouter un Commentaire</h3>
 {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
@@ -94,7 +94,7 @@
                 {{ form_widget(commentForm.content, { 'attr':  {
                     'rows': '4',
                     'class': 'form-control',
-                    'placeholder': 'Enter your comment'
+                    'placeholder': 'Entrez votre commentaire'
                 }}) }}
             </div>
 
@@ -107,12 +107,12 @@
                 }}) }}
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publish comment"/>
+                <input type="submit" class="btn btn-primary" value="Publier le commentaire"/>
             </div>
         {{ form_end(commentForm) }}
         
     {% else %}
-        <a href="{{ path('login') }}">Log in</a> to add comments.
+        <a href="{{ path('login') }}">Se connecter</a> pour ajouter des commentaires
     {% endif %}
 </p>
 {% endblock %}
