@@ -57,7 +57,6 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.level' => $app['monolog.level']
 ));
 
-// Register services.
 // Register services
 $app['dao.billet'] = function ($app) {
     $billetDAO = new Blog\DAO\BilletDAO($app['db']);
@@ -69,8 +68,6 @@ $app['dao.user']= function ($app){
  	return new Blog\DAO\UserDAO($app['db']);
 };
 
-
-
 $app['dao.comment'] = function ($app) {
     $commentDAO = new Blog\DAO\CommentDAO($app['db']);
     $commentDAO->setBilletDAO($app['dao.billet']);
@@ -78,11 +75,8 @@ $app['dao.comment'] = function ($app) {
     return $commentDAO;
 };
 
-
-
-
 // Register error handler
-/*$app->error(function (\Exception $e, Request $request, $code) use ($app) {
+$app->error(function (\Exception $e, Request $request, $code) use ($app) {
     switch ($code) {
         case 403:
             $message = 'Access denied.';
@@ -94,4 +88,4 @@ $app['dao.comment'] = function ($app) {
             $message = "Something went wrong.";
     }
     return $app['twig']->render('error.html.twig', array('message' => $message));
-});*/
+});
