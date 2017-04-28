@@ -56,7 +56,7 @@ body {
 }
 
 #compteur2{
-    
+    float: right;
     margin: 2%;
     margin-left: auto;
     margin-right: auto;

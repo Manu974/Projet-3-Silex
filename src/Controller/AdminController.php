@@ -59,7 +59,7 @@ class AdminController {
     }
     
     return $app['twig']->render('billet_form.html.twig', array(
-        'title' => 'New billet',
+        'title' => 'Nouveau chapitre ?',
         'billetForm' => $billetForm->createView()));
     }
 
@@ -80,7 +80,7 @@ class AdminController {
          return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('billet_form.html.twig', array(
-        'title' => 'Edit billet',
+        'title' => "Edition d'un Chapitre",
         'billetForm' => $billetForm->createView()));
     }
 
@@ -117,7 +117,7 @@ class AdminController {
          return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('comment_form.html.twig', array(
-        'title' => 'Edit comment',
+        'title' => "Edition d'un commentaire",
         'commentForm' => $commentForm->createView()));
     }
 
@@ -201,7 +201,7 @@ class AdminController {
         return $app->redirect($app['url_generator']->generate('admin_user_add'));
     }
     return $app['twig']->render('user_form.html.twig', array(
-        'title' => 'New user',
+        'title' => 'Nouvel Utilisateur',
         'userForm' => $userForm->createView()));
     }
 

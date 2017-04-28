@@ -15,7 +15,30 @@
   'wordcount visualchars advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker textcolor',
   'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
   'save table contextmenu directionality emoticons template paste textcolor'
-]
+],
+init_instance_callback : function(editor) {
+    editor.on('keyup', function (e) {
+        var text = tinyMCE.activeEditor.getContent({
+            format : 'text'
+        });
+
+        var nombreCaracter = text.length;
+        var delCode = text.charCodeAt();
+         
+        
+        if(delCode == '10' ) {
+          nombreCaracter = 0 ;
+        }
+
+        var msg =  nombreCaracter + ' Caractere(s) / 5000';
+        $('#compteur2').text(msg);
+        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
+
+        else{
+          $('#compteur2').removeClass('label-danger').addClass('label-success');
+        }
+    });
+}
     
   });
   </script>
@@ -70,42 +93,11 @@
         </div>
     </div>
     <div id="resultat"></div>
-<div id="compteur2" class="label label-success"> 0 mots - 0 Caractere / 5000</div>
+<div id="compteur2" class="label label-success"> 0 Caractere / 5000</div>
   {{ form_widget(billetForm.valider, {'attr': {'class': 'btn btn-primary'}}) }}
     
 {{ form_end(billetForm) }}
 </div>
 {% endblock %}
 
-{% block script %}
-
-{{parent()}}
-<script> 
-    function count_carac(){
-      $('.mce-container').keyup(function(){
-
-        var nombreCaracter = $(this).val().length;
-
-        var nombreMots = jQuery.trim($(this).val()).split(' ').length;
-        if($(this).val() === '') {
-          nombreMots = 0 ;
-        }
-
-        var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
-        $('#compteur2').text(msg);
-        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
-
-        else{
-          $('#compteur2').removeClass('label-danger').addClass('label-success');
-        }
-      });
-    } 
-
-    $(document).ready(function() {
-      count_carac();
-    });
-
-
-  </script>
-{% endblock %}
 
