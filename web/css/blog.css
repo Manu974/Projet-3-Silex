@@ -63,3 +63,10 @@ body {
     font: 12px Verdana;
 }
 
+#compteur3{
+    float: right;
+    margin: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    font: 12px Verdana;
+}

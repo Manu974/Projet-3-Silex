@@ -3,8 +3,8 @@
 {% block title %}{{ billet.title }}{% endblock %}
 {% block content %}
 
-{% block comments %}
-<div class="panel panel-success">
+    {% block comments %}
+    <div class="panel panel-success">
         <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong></div>
         <div class="panel-body">{{ comment.content }}</div>
 
@@ -13,8 +13,9 @@
                 {{ flashMessage }}
             </div>
         {% endfor %}
+
         {% if commentFormReply %}
-        {{ form_start(commentFormReply,{ 'attr': {'class': 'form-horizontal'} }) }}
+            {{ form_start(commentFormReply,{ 'attr': {'class': 'form-horizontal'} }) }}
             <div class="form-group" id="commentReply">
                 {{ form_errors(commentFormReply.content) }}
                 {{ form_widget(commentFormReply.content, { 'attr':  {
@@ -36,48 +37,51 @@
             <div class="form-group" id="reply">
                 <input  type="submit" class="btn btn-primary" value="Répondre"/>
             </div>
-        {{ form_end(commentFormReply) }}
-        
-         {% endif %}
+            {{ form_end(commentFormReply) }}
 
-         <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
-        </div>
+        {% endif %}
 
+        <div id="report"><a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span> Signaler le commentaire</button></a> </div>
+    </div>
+
+    {% endblock %}
 {% endblock %}
-{% endblock %}
+
 {% block script %}
 
 {{parent()}}
+
 <script> 
     function count_carac(){
-      $('#comment_content').on('keyup',function(){
-        var maxCaracter = "200";
-        var nombreCaracter = $(this).val().length;
+        $('#comment_content').on('keyup',function(){
+            var maxCaracter = "200";
+            var nombreCaracter = $(this).val().length;
 
-        var nombreMots = jQuery.trim($(this).val()).split(' ').length;
-        console.log(nombreMots);
-        if($(this).val() === '') {
-          nombreMots = 0 ;
-        }
+            var nombreMots = jQuery.trim($(this).val()).split(' ').length;
+            console.log(nombreMots);
 
-        var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
-        $('#compteur2').text(msg);
-        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');
-        $('#comment_content').attr('maxlength',maxCaracter);
+            if($(this).val() === '') {
+                nombreMots = 0 ;
+            }
 
-    }
+            var msg = ' '+ nombreMots + ' mot(s) | ' + nombreCaracter + ' Caractere(s) / 200';
+            $('#compteur2').text(msg);
 
-        else{
-          $('#compteur2').removeClass('label-danger').addClass('label-success');
-        }
-      });
+            if(nombreCaracter > 200) { 
+                $('#compteur2').removeClass('label-success').addClass('label-danger');
+                $('#comment_content').attr('maxlength',maxCaracter);
+            }
+
+            else{
+                $('#compteur2').removeClass('label-danger').addClass('label-success');
+            }
+        });
     } 
 
     $(document).ready(function() {
-      count_carac();
+        count_carac();
     });
-
-
-  </script>
+    
+</script>
 {% endblock %}
 
