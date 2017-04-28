@@ -228,7 +228,7 @@ class AdminController {
         return $app->redirect($app['url_generator']->generate('admin'));
     }
     return $app['twig']->render('user_form.html.twig', array(
-        'title' => 'Edit user',
+        'title' => "Edition d'un utilisateur",
         'userForm' => $userForm->createView()));
     }
 

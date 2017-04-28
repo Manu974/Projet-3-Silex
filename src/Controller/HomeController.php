@@ -119,7 +119,7 @@ class HomeController {
         return $app->redirect($app['url_generator']->generate('login'));
     }
     return $app['twig']->render('register.html.twig', array(
-        'title' => 'New user',
+        'title' => 'Nouvel Utilisateur',
         'userForm' => $userForm->createView()));
     }
 

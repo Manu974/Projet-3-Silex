@@ -24,7 +24,6 @@ init_instance_callback : function(editor) {
 
         var nombreCaracter = text.length;
         var delCode = text.charCodeAt();
-         
         
         if(delCode == '10' ) {
           nombreCaracter = 0 ;
@@ -32,7 +31,7 @@ init_instance_callback : function(editor) {
 
         var msg =  nombreCaracter + ' Caractere(s) / 5000';
         $('#compteur2').text(msg);
-        if(nombreCaracter > 200) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
+        if(nombreCaracter > 5000) { $('#compteur2').removeClass('label-success').addClass('label-danger');}
 
         else{
           $('#compteur2').removeClass('label-danger').addClass('label-success');

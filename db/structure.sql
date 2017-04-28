@@ -24,7 +24,7 @@ create table t_comment (
 	com_id integer not null primary key auto_increment,
 	com_pseudo integer not null,
 	com_dateofpost datetime not null,
-	com_content varchar(500),
+	com_content varchar(200),
 	billet_id integer not null,
 	status boolean default null,
 	report boolean default null,
