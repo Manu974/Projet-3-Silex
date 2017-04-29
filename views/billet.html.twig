@@ -29,7 +29,7 @@
             {% for comment in comments if comment.level == 0 %}
                 {% if comment.status == '1'%}
                     <div class="panel panel-success level0">
-                        <div class="panel-heading"><strong>{{ comment.pseudo.username}} at {{comment.dateofpost}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a> </div>
+                        <div class="panel-heading"><strong>{{ comment.pseudo.username}} le {{comment.dateofpost|date("d/m/Y \\à h:m")}}</strong> <a href="{{ path('billet_comment_report',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-flag"></span></button></a> </div>
                         <div class="panel-body">{{ comment.content }}</div>
 
                         <div id="reply"><a href="{{ path('billet_comment_reply',{ 'comment_id': comment.id, 'billet_id': billet.id }) }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-retweet"></span> Répondre</button></a> </div>

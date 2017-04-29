@@ -9,7 +9,7 @@
         <div  class="panel panel-primary billet">
             <div class="panel-heading"><h2>{{ billet.title }}</h2></div>
             <div class="panel-body"> <p>{{ billet.content|raw }}</p>
-                <p> publié par {{ billet.author.username }}</p>
+                <p> publié par {{ billet.author.username }} le {{billet.publication|date("d/m/Y \\à h:m")}}</p>
                 <a class="billetTitle" href="{{ path('billet', { 'billet_id': billet.id }) }}">Commentaires</a>
             </div>
         </div>
