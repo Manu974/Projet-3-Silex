@@ -1,5 +1,6 @@
-# OC-MicroCMS
+# Projet 3 parcours chef de projet multimédia - développement
 
-Support du cours OpenClassrooms "Evoluer vers une architecture PHP professionnelle".
+création d'un blog pour un écrivain
 
-Itération 3 : intégration du framework Silex.
+avec le framework silex, Orientée Objet, base de données MySQL
+interface front et back
